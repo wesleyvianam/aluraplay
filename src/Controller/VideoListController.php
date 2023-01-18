@@ -15,6 +15,7 @@ class VideoListController implements Controller
     public function processaRequisicao(): void
     {
         $videoList = $this->videoRepository->all();
+        // print_r($videoList);die;
         require_once __DIR__ . '/../../views/video-list.php';
     }
 }

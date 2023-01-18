@@ -9,7 +9,7 @@ use Alura\Mvc\Controller\{
     Error404Controller,
     NewVideoController,
     VideoFormController,
-    VideoListController
+    VideoListController,
 };
 use Alura\Mvc\Repository\VideoRepository;
 
@@ -23,6 +23,13 @@ $routes = require_once __DIR__ . "/../../aluraplay/config/routes.php";
 
 $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
 $httpMethod = $_SERVER['REQUEST_METHOD'];
+
+session_start();
+session_regenerate_id();
+$isLoginRoute = $pathInfo === '/login';
+if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute) {
+    header('Location: /login');
+}
 
 $key = "$httpMethod|$pathInfo";
 if (array_key_exists($key, $routes)) {
